@@ -18,8 +18,13 @@ public class TeatcherController {
         return teacherRepository.findAll();
     }
 
+    @GetMapping("/{teacherName}")
+    public Teacher getTeacherByTeacherName(@PathVariable String teacherName){
+        return teacherRepository.findOneByName(teacherName);
+    }
     @PostMapping
     public void addTeacher(@RequestBody Teacher teacher){
+
 
         teacherRepository.save(teacher);
     }
@@ -34,4 +39,6 @@ public class TeatcherController {
     public void deleteTeacher(@PathVariable Long teacherId) {
         teacherRepository.deleteById(teacherId);
     }
+
+
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Teachers Page </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/teacher.js"></script>
+</head>
+<body id="teachers">
+<nav id="navbar">
+    <h1 class="l-heading">
+       <span id="text"><i class="fas fa-book-reader fa-2x"></i> School</span> Website
+    </h1>
+    <ul>
+        <li><a href="#teachers">Teachers</a></li>
+        <li><a href="courses.html">Courses</a></li>
+    </ul>
+</nav>
+<section>
+    <div class="container">
+     <form>
+         <div>
+            <label for="TeacherName" class="col-sm-2 col-form-label">TeacherName </label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control-plaintext" id= "teacherName" placeholder="Teacher Name"/>
+            </div>
+         </div>
+        <div id='btns'>
+            <button id="add" class="btn btn-primary" style="display: block;"> Add Teacher </button> <br>
+            <button id="save" class="btn btn-primary" style="display: none;"> Save Teacher </button> <br>
+            <button id="fetch" class="btn btn-primary" style="align-content: center;"> Get Teachers </button> <br>
+        </div>
+        <div class="container">
+            <h4 class="tex-center"> Teacher Data </h4>
+            <table  class="table table-bordered table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Delete</td>
+                        <td>Update</td>
+                    </tr>
+                </thead>
+                <tbody id= "teacherContainer">
+                </tbody>
+            </table>
+        </div>
+        
+     </form>
+    </div>
+</section>
+</body>
+</html>

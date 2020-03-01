@@ -3,6 +3,7 @@ package com.javacourse.school.controller;
 import com.javacourse.school.models.Course;
 import com.javacourse.school.models.Teacher;
 import com.javacourse.school.repositories.CourseRepository;
+import com.javacourse.school.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public class CourseController {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @GetMapping
     public List<Course> getCourses() {
@@ -35,6 +39,11 @@ public class CourseController {
     public Course updateTeacher(@RequestBody Course course){
         courseRepository.save(course);
         return course;
+    }
+
+    @GetMapping("/{teacherid}/courses")
+    public List<Course> getCoursesByTeacherId (@PathVariable Long teacherid) {
+       return courseRepository.findAllByTeacherId(teacherid);
     }
 
 }
