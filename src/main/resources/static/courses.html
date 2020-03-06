@@ -1,87 +1,146 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Courses Page </title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Courses Page</title>
+    <!-- import dataTable link  -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+
+    <!-- imports JQuery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/course.js"></script>
-</head>
-<body id="teachers">
-<nav id="navbar">
-    <h1 class="l-heading">
-       <span id="text"><i class="fas fa-book-reader fa-2x"></i> School</span> Website
-    </h1>
-    <ul>
+  </head>
+  <body id="teachers">
+    <nav id="navbar">
+      <h1 class="l-heading">
+        <span id="text"><i class="fas fa-book-reader fa-2x"></i> School</span> Website
+      </h1>
+      <ul>
         <li><a href="Teacher.html">Teachers</a></li>
         <li><a href="#">Courses</a></li>
-    </ul>
-</nav>
-<section>
-    <div class="container">
-     <form>
-         <div class="form-group">
-            <label for="teacherNameLabel"> Select Teacher </label>
-             <select id="teacherName" class="form-control"> Teacher Name 
-             <option></option>
-             </select>
-        </div>
-        <div>
-            <label for="courseName" class="col-sm-2 col-form-label">Course Name </label>
-            <div class="col-sm-10">
-            <input type="text" class="form-control-plaintext" id= "courseName" placeholder="Course Name"/>
+      </ul>
+    </nav>
+    <section>
+      <div class="container">
+        <form>
+          <div class="input-group mb-3">
+           <label for=""><h5>Teacher Name </h5> </label><br>
+            <select id="teacherName" class="custom-select" placeholder="Teacher Name">
+              <h3>Teacher Name</h3>
+              <option></option>
+            </select>
             </div>
-         </div>
-        <div id='btns'>
-            <button id="add" class="btn btn-primary" style="display: block;"> Add Course </button> <br>
-            <button id="save" class="btn btn-primary" style="display: none;"> Save Course </button> <br>
-            <button id="fetch" class="btn btn-primary" style="align-content: center;"> Get Courses </button> <br>
+            <br>
+          <div class="input-group mb-3">
+            <input type="text" class="col-sm-10" id="courseName" placeholder="Course Name" />
+            <button id="add" class="btn btn-primary">Add Course</button>
+          </div>
+        </form>
         </div>
-        <div class="container">
-            <h4 class="tex-center"> Courses Data </h4>
-            <table  class="table table-bordered table-hover">
-                <thead>
-                    <tr class="table-primary">
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>Teacher Name</td>
-                        <td>Delete</td>
-                        <td>Update</td>
-                    </tr>
-                </thead>
-                <tbody id= "coursesContainer">
-                </tbody>
+          <!-- table container -->
+          <div class="container">
+            <h4 class="tex-center">Courses Data</h4>
+            <table id="coursesContainer" class="table table-bordered table-hover">
+              <thead>
+                <tr class="table-primary">
+                  <td>ID</td>
+                  <td>Name</td>
+                  <td>Teacher Name</td>
+                  <td>Delete</td>
+                  <td>Update</td>
+                </tr>
+              </thead>
+              <!-- <tbody id= "coursesContainer">
+                </tbody> -->
             </table>
-        </div>
-        
-     </form>
-    </div>
-</section>
-<div class="modal" style="display: none;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"> Update Course</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form >
-              <input type="text" id="editname" placeholder="Course Name" style="display: block;">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button"  id="saveBtn" class="btn btn-primary">Save</button>
-          <button type="button" id="closebtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- confirm delete modal -->
+    <div id="confirm" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="yesBtn" class="btn btn-primary">Yes</button>
+            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">No</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+
+    <!-- update modal  -->
+    <div id="update" class="modal" tabindex="-1" role="dialog" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Course</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="text" id="editname" placeholder="Course Name" style="display: block;" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
+            <button type="button" id="closebtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error/Success Modal Messages -->
+    <div id="error" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="message"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closebtn2" class="btn btn-secondary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

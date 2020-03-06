@@ -1,58 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Teachers Page </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teachers Page</title>
+    <!-- import dataTable link  -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+
+    <!-- imports JQuery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+
     <script src="js/teacher.js"></script>
-</head>
-<body id="teachers">
-<nav id="navbar">
-    <h1 class="l-heading">
-       <span id="text"><i class="fas fa-book-reader fa-2x"></i> School</span> Website
-    </h1>
-    <ul>
+  </head>
+  <body id="teachers">
+    <nav id="navbar">
+      <h1 class="l-heading">
+        <span id="text"><i class="fas fa-book-reader fa-2x"></i> School</span> Website
+      </h1>
+      <ul>
         <li><a href="#teachers">Teachers</a></li>
         <li><a href="courses.html">Courses</a></li>
-    </ul>
-</nav>
-<section>
-    <div class="container">
-     <form>
-         <div>
-            <label for="TeacherName" class="col-sm-2 col-form-label">TeacherName </label>
-            <div class="col-sm-10">
-            <input type="text" class="form-control-plaintext" id= "teacherName" placeholder="Teacher Name"/>
+      </ul>
+    </nav>
+    <section>
+      <div class="container">
+        <form>
+          <div class="form-group">
+            <input class="col-sm-10" type="text" id="teacherName" placeholder="Teacher Name" />
+            <button id="add" class="btn btn-primary">Add Teacher</button>
+          </div>
+        </form>
+        <div>
+          <h4 class="tex-center">Teacher Data</h4>
+          <table id="teacherContainer" class="table table-bordered table-gride table-hover">
+            <thead>
+              <tr class="table-primary">
+                <td>ID</td>
+                <td>Name</td>
+                <td>Delete</td>
+                <td>Update</td>
+              </tr>
+            </thead>
+          </table>
+          <div style="display: inline-block; align-items: center; justify-content: center; margin-top: 8px;">
+            <button id="save" class="btn btn-primary" style="display: none;">Save Teacher</button>
+            <button id="fetch" class="btn btn-primary" style="align-content: center;">Get Teachers</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Alert Modal section -->
+      <div id="confirm" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Warning</h5>
+              <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-         </div>
-        <div id='btns'>
-            <button id="add" class="btn btn-primary" style="display: block;"> Add Teacher </button> <br>
-            <button id="save" class="btn btn-primary" style="display: none;"> Save Teacher </button> <br>
-            <button id="fetch" class="btn btn-primary" style="align-content: center;"> Get Teachers </button> <br>
+            <div class="modal-body">
+              <p>Are you sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="yesBtn" class="btn btn-primary">Yes</button>
+              <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+          </div>
         </div>
-        <div class="container">
-            <h4 class="tex-center"> Teacher Data </h4>
-            <table  class="table table-bordered table-hover">
-                <thead>
-                    <tr class="table-primary">
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>Delete</td>
-                        <td>Update</td>
-                    </tr>
-                </thead>
-                <tbody id= "teacherContainer">
-                </tbody>
-            </table>
+      </div>
+
+      <!-- Error/Success Modal Messages -->
+      <div id="error" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Warning</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="message"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="closebtn" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+          </div>
         </div>
-        
-     </form>
-    </div>
-</section>
-</body>
+      </div>
+
+      <!-- Update Teacher Data  Modal  -->
+      <div id="updateModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="updateModal-title">Update Teacher Data</h5>
+              <button type="button" class="closeEdit" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <input class="col-sm-10" type="text" id="teacherEditName" placeholder="Teacher Name" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="update" class="btn btn-primary">Save</button>
+              <button type="button" id="closeEditbtn" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

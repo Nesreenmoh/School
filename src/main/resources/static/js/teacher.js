@@ -1,135 +1,172 @@
 var updated_id;
-$(document).ready(function(){
+var teacher_id;
+var teacherDataTable;
 
-    getTeachers();
-
-    $('#add').click(function(){
-        if($('#teacherName').val() === '') {
-            alert("Please enter teacher name!")
+$(document).ready(function() {
+  // defining a datatable table -- should be one time
+  teacherDataTable = $('#teacherContainer').DataTable({
+    ajax: {
+      url: 'api/teacher',
+      dataSrc: ''
+    },
+    columns: [
+      { data: 'id' },
+      { data: 'name' },
+      {
+        data: null,
+        render: function(data, type, row) {
+          return '<td><a href="#"><i class="fas fa-close" teacherid="' + data.id + '"></i></a></td>';
         }
-        else
-        {
-
-            addTeacher();
+      },
+      {
+        data: null,
+        render: function(data, type, row) {
+          return '<td> <a href="#"> <i class="fas fa-edit" teacherid="' + data.id + '"></i></a></td>';
         }
+      }
+    ]
+  });
 
-    })
-
-    $('#fetch').click(function(e) {
-
-        getTeachers();
-        e.preventDefault();
-    });
-
-    $('#teacherContainer').click(function (event) {
-
-        if(event.target.className === 'fa fa-close')
-        {
-           var reply = confirm("Are you sure you want to delete?");
-           if(reply){
-            deleteTeachers(event);
-           }
-        }
-
-        if(event.target.className === 'fa fa-edit')
-        {
-            updated_id = event.target.parentNode.parentElement.parentElement.children[0].innerHTML;
-            const teacher_name = event.target.parentNode.parentElement.parentElement.children[1].innerHTML;
-            $('#teacherName').val(teacher_name);
-            $('#add').hide();
-            $('#save').show();
-            // updateTeachers(teacher_id);
-        }
-        event.preventDefault();
-    });
-    $('#save').click(function(event){
-
-        updateTeachers(updated_id);
-        event.preventDefault();
-    })
-   
-})
-
-
-function  updateTeachers(updated_id) {
-
-    var teacher = {
-        id: updated_id, 
-        name: $('#teacherName').val(),
+  // add an event on the add teacher button
+  $('#add').click(function(e) {
+    if ($('#teacherName').val() === '') {
+      showAlert('No teacher name or the name is short too!', 'error');
+    } else {
+      addTeacher();
     }
+    e.preventDefault();
+  });
 
-    var jsonObject = JSON.stringify(teacher);
-    $.ajax({
-        url: "api/teacher/" + updated_id,
-        type: "PUT",
-        contentType: "application/json",
-        data: jsonObject,
-        success: function () {
-            alert("A record is updated!")
-        },
-        error: function () {
-            alert("Invalid Input", 'error');
-        }
-    });
+  // add an event on fetch teachers button
+  $('#fetch').click(function(e) {
+    getTeachers();
+    e.preventDefault();
+  });
 
+  // an event when we click on the delete icon
+  $('#teacherContainer').on('click', '.fas.fa-close', function() {
+    teacher_id = $(this).attr('teacherid');
+    $('#confirm').show();
+  });
+
+  // an event when we click on the edit icon
+  $('#teacherContainer').on('click', '.fas.fa-edit', function() {
+    teacher_id = $(this).attr('teacherid');
+    const teacher_name = event.target.parentNode.parentElement.parentElement.children[1].innerHTML;
+    $('#teacherEditName').val(teacher_name);
+    $('#updateModal').show();
+  });
+
+  // addding an event on the button of close Edit Modal
+  $('#closeEditbtn').click(function() {
+    $('#updateModal').hide();
+  });
+
+  // adding an event on the small button close of update modal
+  $('.closeEdit').click(function() {
+    $('#updateModal').hide();
+  });
+
+  // add an event on the update button of the update Modal
+  $('#update').click(function() {
+    updateTeachers(teacher_id);
+    $('#updateModal').hide();
+  });
+
+  // add an event on the yes button of the alert delete Modal
+  $('#yesBtn').click(function() {
+    deleteTeachers(teacher_id);
+    $('#confirm').hide();
+  });
+
+  // adding an event on the small button close of confirm delete alert modal
+  $('#close').click(function() {
+    $('#confirm').hide();
+  });
+  // adding an event on the close button of confirm delete modal
+  $('#closebtn').click(function() {
+    $('#error').hide();
+  });
+});
+
+// update teacher function
+function updateTeachers(updated_id) {
+  var teacher = {
+    id: updated_id,
+    name: $('#teacherEditName').val()
+  };
+
+  var jsonObject = JSON.stringify(teacher);
+  $.ajax({
+    url: 'api/teacher/' + updated_id,
+    type: 'PUT',
+    contentType: 'application/json',
+    data: jsonObject,
+    success: function() {
+      showAlert('A record is updated!', 'success');
+      getTeachers();
+    },
+    error: function() {
+      alert('Invalid Input', 'error');
+    }
+  });
 }
 
+// get teacher function
 function getTeachers() {
-
-    $.get("api/teacher", function (teacher) {
-        $('#teacherContainer').empty();
-        console.log(teacher);
-        for(var i=0; i<teacher.length; i++) {
-            const list = document.getElementById('teacherContainer');
-            const row = document.createElement('tr');
-            row.innerHTML = `
-            <td>${teacher[i].id}</td>
-            <td>${teacher[i].name}</td>
-            <td> <a href="#" class="delete"> <i class="fa fa-close"></i> </a></td> 
-            <td> <a href="#" class="update"> <i class="fa fa-edit"></i> </a></td>`;
-            list.appendChild(row);
-            }
-
-    });
+  teacherDataTable.ajax.reload();
 }
+
+// Add teacher function
 function addTeacher() {
-
-   var teacher = {
-        name: $('#teacherName').val(),
-    };
-
-    var jsonObject = JSON.stringify(teacher);
-    $.ajax({
-        url: "api/teacher",
-        type: "POST",
-        contentType: "application/json",
-        data: jsonObject,
-        success: function () {
-          alert("A record is added");
-          getTeachers();
-        }, 
-        error: function () {
-            alert("Invalid Input", 'error');
-        }
-
-    });
-
-
+  var teacher = {
+    name: $('#teacherName').val()
+  };
+  var jsonObject = JSON.stringify(teacher);
+  $.ajax({
+    url: 'api/teacher',
+    type: 'POST',
+    contentType: 'application/json',
+    data: jsonObject,
+    success: function() {
+      showAlert('A Teacher has been Added!', 'success');
+      getTeachers();
+    },
+    error: function() {
+      showAlert('');
+      alert('Invalid Input', 'error');
+    }
+  });
 }
 
-function deleteTeachers(event)
-    {
-        const teacher_id = event.target.parentNode.parentElement.parentElement.children[0].innerHTML;
-        $.ajax({
-            url: "/api/teacher/" + teacher_id,
-            type: "DELETE",
-            success: function () {
-                event.target.parentNode.parentElement.parentElement.remove();
-                alert ("Teacher is deleted!");
-            },
-            error: function () {
-            
-               alert("Invalid input or you cannot delete a teacher who has some courses !")
-            }
-        });
-   }
+// delete teacher function
+function deleteTeachers(teacher_id) {
+  $.ajax({
+    url: 'api/teacher/' + teacher_id,
+    type: 'DELETE',
+    success: function() {
+      showAlert('A Teacher has  been deleted!', 'success');
+      getTeachers();
+    },
+    error: function() {
+      showAlert('Invalid input or you cannot delete a teacher who has some courses !', 'error');
+    }
+  });
+}
+
+// show alert function
+function showAlert(msg, myclass) {
+  if (myclass === 'error') {
+    $('.modal-title').html('');
+    $('.modal-title').html('Error');
+    $('#error').show();
+    $('#message').text('');
+    $('#message').append(msg);
+  } else {
+    $('.modal-title').html('');
+    $('.modal-title').html('Success');
+    $('#error').show();
+    $('#message').text('');
+    $('#message').append(msg);
+  }
+}
