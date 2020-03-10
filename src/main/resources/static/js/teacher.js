@@ -1,4 +1,3 @@
-var updated_id;
 var teacher_id;
 var teacherDataTable;
 
@@ -89,34 +88,6 @@ $(document).ready(function() {
   });
 });
 
-// update teacher function
-function updateTeachers(updated_id) {
-  var teacher = {
-    id: updated_id,
-    name: $('#teacherEditName').val()
-  };
-
-  var jsonObject = JSON.stringify(teacher);
-  $.ajax({
-    url: 'api/teacher/' + updated_id,
-    type: 'PUT',
-    contentType: 'application/json',
-    data: jsonObject,
-    success: function() {
-      showAlert('A record is updated!', 'success');
-      getTeachers();
-    },
-    error: function() {
-      alert('Invalid Input', 'error');
-    }
-  });
-}
-
-// get teacher function
-function getTeachers() {
-  teacherDataTable.ajax.reload();
-}
-
 // Add teacher function
 function addTeacher() {
   var teacher = {
@@ -134,6 +105,34 @@ function addTeacher() {
     },
     error: function() {
       showAlert('');
+      alert('Invalid Input', 'error');
+    }
+  });
+}
+
+// get teacher function
+function getTeachers() {
+  teacherDataTable.ajax.reload();
+}
+
+// update teacher function
+function updateTeachers() {
+  var teacher = {
+    id: teacher_id,
+    name: $('#teacherEditName').val()
+  };
+
+  var jsonObject = JSON.stringify(teacher);
+  $.ajax({
+    url: 'api/teacher/' + teacher_id,
+    type: 'PUT',
+    contentType: 'application/json',
+    data: jsonObject,
+    success: function() {
+      showAlert('A record is updated!', 'success');
+      getTeachers();
+    },
+    error: function() {
       alert('Invalid Input', 'error');
     }
   });
