@@ -10,12 +10,15 @@ import java.util.List;
 @RestController
 @RequestMapping("api/teacher")
 public class TeatcherController {
+
     @Autowired
     private TeacherRepository teacherRepository;
 
     @GetMapping
     public List<Teacher> getTeachers() {
         return teacherRepository.findAll();
+
+
     }
 
     @GetMapping("/{teacherName}")
