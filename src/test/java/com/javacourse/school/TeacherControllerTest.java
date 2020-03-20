@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -68,9 +69,11 @@ public class TeacherControllerTest {
     @Test
     public void testPost() throws Exception{
         Teacher myteacher = new Teacher(3L,"Nesreen Al-shargabi");
+        teacherRepository.save(myteacher);
         ObjectMapper mapper = new ObjectMapper();
         String json=mapper.writeValueAsString(myteacher);
-        when(teacherRepository.save(Mockito.any(Teacher.class))).thenReturn(myteacher);
+//        verify(teacherRepository,times(1)).save(Mockito.any(Teacher.class));
+
         mockMvc.perform(post("/api/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
@@ -78,6 +81,7 @@ public class TeacherControllerTest {
                 .andExpect(jsonPath("$.id",is((myteacher.getId()).intValue())))
                 .andExpect(jsonPath("$.name",is(myteacher.getName())))
                 .andExpect(status().isOk());
+
     }
 
 }

@@ -25,11 +25,12 @@ public class TeatcherController {
     public Teacher getTeacherByTeacherName(@PathVariable String teacherName){
         return teacherRepository.findOneByName(teacherName);
     }
-    @PostMapping
-    public void addTeacher(@RequestBody Teacher teacher){
 
+    @PostMapping
+    public Teacher addTeacher(@RequestBody Teacher teacher){
 
         teacherRepository.save(teacher);
+        return teacher;
     }
 
     @PutMapping("/{teacherId}")
